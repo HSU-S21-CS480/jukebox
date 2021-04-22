@@ -20,7 +20,6 @@ export function play(event){
     const album = document.getElementById("albumInfo");
     const duration = document.getElementById("durationInfo");
    
-
      playBtn.classList.add('hidden');
      playBtn.classList.remove('show');
      pauseBtn.classList.add('show');
@@ -43,35 +42,61 @@ export function play(event){
      event.preventDefault();
     const playBtn = document.getElementById("playBtn");
     const pauseBtn = document.getElementById("pauseBtn");
-    
+    const title = document.getElementById("titleInfo");
+    const artist = document.getElementById("artistInfo");
+    const album = document.getElementById("albumInfo");
+    const duration = document.getElementById("durationInfo");
+
      pauseBtn.classList.remove('show');
      pauseBtn.classList.add('hidden');
      playBtn.classList.add('show');
 
      axios.get(config.Routes.Pause)
         .then((response) => {
-           console.log(response.data + "pause")
+           console.log(response.data + "pause");
+           title.innerHTML = response.data.Title;
+       artist.innerHTML = response.data.Artist;
+       album.innerHTML = response.data.Album;
+       duration.innerHTML = response.data.Duration;
          }
       ).catch(function (error){console.log("error pause")});
     console.log("pressed pause");
 }
  export function playNext(event){
+   const title = document.getElementById("titleInfo");
+    const artist = document.getElementById("artistInfo");
+    const album = document.getElementById("albumInfo");
+    const duration = document.getElementById("durationInfo");
+
      event.preventDefault();
    
      axios.get(config.Routes.Next)
         .then((response) => {
-           console.log(response.data + "next")
+           console.log(response.data + "next");
+           title.innerHTML = response.data.Title;
+       artist.innerHTML = response.data.Artist;
+       album.innerHTML = response.data.Album;
+       duration.innerHTML = response.data.Duration;
          }
       ).catch(function (error){console.log("error next")});
     console.log("pressed next");
 
 }
  export function playPrev(event){
+   const title = document.getElementById("titleInfo");
+    const artist = document.getElementById("artistInfo");
+    const album = document.getElementById("albumInfo");
+    const duration = document.getElementById("durationInfo");
+
      event.preventDefault();
 
      axios.get(config.Routes.Prev)
         .then((response) => {
            console.log(response.data + "prev")
+           title.innerHTML = response.data.Title;
+       artist.innerHTML = response.data.Artist;
+       album.innerHTML = response.data.Album;
+       duration.innerHTML = response.data.Duration;
          }
       ).catch(function (error){console.log("error prev")});
     console.log("pressed prev");
