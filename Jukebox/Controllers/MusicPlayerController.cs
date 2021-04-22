@@ -39,12 +39,21 @@ namespace Jukebox.Controllers
         }
 
         [Route(HttpVerbs.Get, "/play")]
-        public string PlayMusic()
+        public Dictionary<string, string> PlayMusic()
         {
             JukeboxMediaManager.GetInstance().Play();
             var currentSong = CrossMediaManager.Current.Queue.Current.DisplayTitle;
-            
-            return currentSong;
+            var currentArtist = CrossMediaManager.Current.Queue.Current.Artist;
+            var currentAlbum = CrossMediaManager.Current.Queue.Current.Album;
+            var currentDuration = CrossMediaManager.Current.Queue.Current.Duration.ToString();
+
+            var metaData = new Dictionary<string, string>()
+            {
+                { "Title", currentSong }, {"Artist", currentArtist }, {"Album",currentAlbum },
+                { "Duration", currentDuration }
+            };
+
+            return metaData;
         }
 
         [Route(HttpVerbs.Get, "/play/{id}")]

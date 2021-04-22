@@ -16,6 +16,9 @@ export function play(event){
     const playBtn = document.getElementById("playBtn");
     const pauseBtn = document.getElementById("pauseBtn");
     const title = document.getElementById("titleInfo");
+    const artist = document.getElementById("artistInfo");
+    const album = document.getElementById("albumInfo");
+    const duration = document.getElementById("durationInfo");
    
 
      playBtn.classList.add('hidden');
@@ -26,7 +29,10 @@ export function play(event){
      axios.get(config.Routes.Play)
      .then((response)=>{
        console.log(response.data); 
-       title.innerHTML = response.data;
+       title.innerHTML = response.data.Title;
+       artist.innerHTML = response.data.Artist;
+       album.innerHTML = response.data.Album;
+       duration.innerHTML = response.data.Duration;
     })
         .catch(function (){console.log("error play")});
     console.log("pressed play ");
@@ -141,15 +147,22 @@ function MusicPlayer() {
                         <div id="titleInfo">Track - song 1</div>
                         <br></br>
                         <div id="artistInfo">Artist - someones</div>
+                        <br></br>
+                        <div id="albumInfo">Album - something</div>
                     </div>   
                 </Row>
 
               
                 {/* SeekBar */}
-                <Row className="justify-content-center m-5">
-                  <input className="seekbar" id="seekbar"  type="range" min="1" max="100" onChange={onSeek}/>                  
-                </Row>
+                 <div>
+                   
+                  <Row className="justify-content-center m-5">
+                      <input className="seekbar" id="seekbar"  type="range" min="1" max="100" onChange={onSeek}/>   
+                      <div className="pb-5" id="durationInfo"> duration </div>               
+                  </Row>
 
+                 </div>
+              
                 {/* Track Control Buttons */}
                 <Row className="justify-content-center my-5 mx-1">
                       <Button className="m-3 prevBtn playerBtn"  onClick={e=>playPrev(e)} id="prevBtn" ></Button>                
