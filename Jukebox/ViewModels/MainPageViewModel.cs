@@ -29,7 +29,6 @@ namespace Jukebox.ViewModels
 
         protected Playlist activePlaylist = new Playlist();
 
-        public IList<string> myPlaylist;
 
         public MainPageViewModel() : base()
         {
@@ -72,10 +71,6 @@ namespace Jukebox.ViewModels
                 Path = "C:/Users/dbjer/Music/playlist/track3.mp3"
             });
             
-            myPlaylist = new string[] { activePlaylist.Songs[0].Path,
-                                        activePlaylist.Songs[1].Path,
-                                        activePlaylist.Songs[2].Path};
-          
 
 
         }
@@ -88,6 +83,8 @@ namespace Jukebox.ViewModels
         {
             await CrossMediaManager.Current.PlayPreviousOrSeekToStart();
         }
+
+
 
         private async Task PauseMusic()
         {

@@ -27,7 +27,7 @@ export function play(event){
  
      axios.get(config.Routes.Play)
      .then((response)=>{
-       console.log(response.data); 
+       console.log(response.data.Title); 
        title.innerHTML = response.data.Title;
        artist.innerHTML = response.data.Artist;
        album.innerHTML = response.data.Album;
@@ -53,7 +53,7 @@ export function play(event){
 
      axios.get(config.Routes.Pause)
         .then((response) => {
-           console.log(response.data + "pause");
+           console.log(response.data.Title);
            title.innerHTML = response.data.Title;
        artist.innerHTML = response.data.Artist;
        album.innerHTML = response.data.Album;
@@ -98,7 +98,8 @@ export function play(event){
        album.innerHTML = response.data.Album;
        duration.innerHTML = response.data.Duration;
          }
-      ).catch(function (error){console.log("error prev")});
+
+      ).catch(function (error){console.log("error")});
     console.log("pressed prev");
 
 }

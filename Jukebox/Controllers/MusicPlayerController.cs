@@ -17,8 +17,6 @@ namespace Jukebox.Controllers
     {
         protected JukeboxDb _db;
 
-      
-
         public MusicPlayerController()
         {
             _db = JukeboxDb.GetInstance();
@@ -42,18 +40,8 @@ namespace Jukebox.Controllers
         public Dictionary<string, string> PlayMusic()
         {
             JukeboxMediaManager.GetInstance().Play();
-            var currentSong = CrossMediaManager.Current.Queue.Current.DisplayTitle;
-            var currentArtist = CrossMediaManager.Current.Queue.Current.Artist;
-            var currentAlbum = CrossMediaManager.Current.Queue.Current.Album;
-            var currentDuration = CrossMediaManager.Current.Queue.Current.Duration.ToString();
 
-            var metaData = new Dictionary<string, string>()
-            {
-                { "Title", currentSong }, {"Artist", currentArtist }, {"Album",currentAlbum },
-                { "Duration", currentDuration }
-            };
-
-            return metaData;
+            return JukeboxMediaManager.GetInstance().getCurrentMetadata();
         }
 
         [Route(HttpVerbs.Get, "/play/{id}")]
@@ -68,17 +56,9 @@ namespace Jukebox.Controllers
         public Dictionary<string, string> PauseMusic()
         {
             JukeboxMediaManager.GetInstance().Pause();
-            var currentSong = CrossMediaManager.Current.Queue.Current.DisplayTitle;
-            var currentArtist = CrossMediaManager.Current.Queue.Current.Artist;
-            var currentAlbum = CrossMediaManager.Current.Queue.Current.Album;
-            var currentDuration = CrossMediaManager.Current.Queue.Current.Duration.ToString();
+           
 
-            var metaData = new Dictionary<string, string>()
-            {
-                { "Title", currentSong }, {"Artist", currentArtist }, {"Album",currentAlbum },
-                { "Duration", currentDuration }
-            };
-            return metaData;
+            return JukeboxMediaManager.GetInstance().getCurrentMetadata();
         }
 
         [Route(HttpVerbs.Get, "/next")]
@@ -87,31 +67,12 @@ namespace Jukebox.Controllers
             await Task.Run(() => JukeboxMediaManager.GetInstance().PlayNext());
             if(CrossMediaManager.Current.Queue.HasNext)
             {
-                var currentSong = CrossMediaManager.Current.Queue.Next.DisplayTitle;
-                var currentArtist = CrossMediaManager.Current.Queue.Next.Artist;
-                var currentAlbum = CrossMediaManager.Current.Queue.Next.Album;
-                var currentDuration = CrossMediaManager.Current.Queue.Next.Duration.ToString();
+                return JukeboxMediaManager.GetInstance().getNextMetadata();
 
-                var metaData = new Dictionary<string, string>()
-            {
-                { "Title", currentSong }, {"Artist", currentArtist }, {"Album",currentAlbum },
-                { "Duration", currentDuration }
-            };
-                return metaData;
             }
             else
             {
-                var currentSong = CrossMediaManager.Current.Queue.Current.DisplayTitle;
-                var currentArtist = CrossMediaManager.Current.Queue.Current.Artist;
-                var currentAlbum = CrossMediaManager.Current.Queue.Current.Album;
-                var currentDuration = CrossMediaManager.Current.Queue.Current.Duration.ToString();
-
-                var metaData = new Dictionary<string, string>()
-                 {
-                    { "Title", currentSong }, {"Artist", currentArtist }, {"Album",currentAlbum },
-                    { "Duration", currentDuration }
-                 };
-                return metaData;
+                return JukeboxMediaManager.GetInstance().getCurrentMetadata();
             };
 
         }
@@ -124,33 +85,11 @@ namespace Jukebox.Controllers
             await Task.Run(()=> JukeboxMediaManager.GetInstance().PlayPrev());
             if (CrossMediaManager.Current.Queue.HasPrevious)
             {
-                var currentSong = CrossMediaManager.Current.Queue.Previous.DisplayTitle;
-                var currentArtist = CrossMediaManager.Current.Queue.Previous.Artist;
-                var currentAlbum = CrossMediaManager.Current.Queue.Previous.Album;
-                var currentDuration = CrossMediaManager.Current.Queue.Previous.Duration.ToString();
-
-                var metaData = new Dictionary<string, string>()
-                 {
-                    { "Title", currentSong }, {"Artist", currentArtist }, {"Album",currentAlbum },
-                    { "Duration", currentDuration }
-                 };
-                return metaData;
+                return JukeboxMediaManager.GetInstance().getPrevMetadata();
             }
             else {
-                var currentSong = CrossMediaManager.Current.Queue.Current.DisplayTitle;
-                var currentArtist = CrossMediaManager.Current.Queue.Current.Artist;
-                var currentAlbum = CrossMediaManager.Current.Queue.Current.Album;
-                var currentDuration = CrossMediaManager.Current.Queue.Current.Duration.ToString();
-
-                var metaData = new Dictionary<string, string>()
-                 {
-                    { "Title", currentSong }, {"Artist", currentArtist }, {"Album",currentAlbum },
-                    { "Duration", currentDuration }
-                 };
-                return metaData;
+                return JukeboxMediaManager.GetInstance().getCurrentMetadata();
             };
-
-
                
         }
 

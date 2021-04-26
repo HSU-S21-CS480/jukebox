@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Jukebox.ViewModels;
+using Newtonsoft.Json;
 
 
 namespace Jukebox.Library
@@ -25,7 +27,41 @@ namespace Jukebox.Library
 
         private JukeboxMediaManager()
         {
-          
+            _currentPlaylist.Songs.Add(new MusicFile
+            {
+                Id = 1,
+                Year = 2000,
+                TrackNumber = 1,
+                Album = "album1",
+                Title = "song1",
+                Artist = "artist1",
+                Path = "C:/Users/dbjer/Music/playlist/track1.mp3",
+                Duration= TagLib.File.Create("C:/Users/dbjer/Music/playlist/track1.mp3").Properties.Duration
+        });
+            _currentPlaylist.Songs.Add(new MusicFile
+            {
+                Id = 2,
+                Year = 2000,
+                TrackNumber = 2,
+                Album = "album2",
+                Title = "song2",
+                Artist = "artist2",
+                Path = "C:/Users/dbjer/Music/playlist/track2.mp3",
+                Duration = TagLib.File.Create("C:/Users/dbjer/Music/playlist/track2.mp3").Properties.Duration
+
+            });
+            _currentPlaylist.Songs.Add(new MusicFile
+            {
+                Id = 3,
+                Year = 2000,
+                TrackNumber = 3,
+                Album = "album3",
+                Title = "song3",
+                Artist = "artist3",
+                Path = "C:/Users/dbjer/Music/playlist/track3.mp3",
+                Duration = TagLib.File.Create("C:/Users/dbjer/Music/playlist/track3.mp3").Properties.Duration
+
+            });
 
         }
 
@@ -50,6 +86,58 @@ namespace Jukebox.Library
         private static void Current_MediaItemFinished(object sender, global::MediaManager.Media.MediaItemEventArgs e)
         {
         }
+
+        public Dictionary<string, string> getCurrentMetadata()
+        {
+            var metaData = new Dictionary<string, string>();
+            //get current song index in the playlist
+            var index = CrossMediaManager.Current.Queue.CurrentIndex;
+            
+
+                metaData.Add("Title", _currentPlaylist.Songs[index].Title);
+                metaData.Add("Artist", _currentPlaylist.Songs[index].Artist);
+                metaData.Add("Album", _currentPlaylist.Songs[index].Album);
+                metaData.Add("Duration", _currentPlaylist.Songs[index].Duration.ToString());
+
+
+
+            return metaData;
+        }
+
+        public Dictionary<string, string> getNextMetadata()
+        {
+            var metaData = new Dictionary<string, string>();
+            //get current song index in the playlist
+            var index = CrossMediaManager.Current.Queue.CurrentIndex;
+
+
+            metaData.Add("Title", _currentPlaylist.Songs[index+1].Title);
+            metaData.Add("Artist", _currentPlaylist.Songs[index+1].Artist);
+            metaData.Add("Album", _currentPlaylist.Songs[index+1].Album);
+            metaData.Add("Duration", _currentPlaylist.Songs[index+1].Duration.ToString());
+
+
+
+            return metaData;
+        }
+
+        public Dictionary<string, string> getPrevMetadata()
+        {
+            var metaData = new Dictionary<string, string>();
+            //get current song index in the playlist
+            var index = CrossMediaManager.Current.Queue.CurrentIndex;
+
+
+            metaData.Add("Title", _currentPlaylist.Songs[index-1].Title);
+            metaData.Add("Artist", _currentPlaylist.Songs[index-1].Artist);
+            metaData.Add("Album", _currentPlaylist.Songs[index-1].Album);
+            metaData.Add("Duration", _currentPlaylist.Songs[index-1].Duration.ToString());
+
+
+
+            return metaData;
+        }
+
 
         public void Play()
         {
